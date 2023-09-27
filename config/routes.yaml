@@ -1,3 +1,4 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+api_get_show:
+    path:       /api/doctrine/admin
+    controller: App\Controller\AdminController::create_product
+    methods:    GET
