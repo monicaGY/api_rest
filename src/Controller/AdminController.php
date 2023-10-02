@@ -98,4 +98,24 @@ class AdminController extends AbstractController
             "mensaje"=>"La seccion se ha creado"
         ]);
     }
+    
+    #[Route('/api/doctrine/admin/delete/product/{id}')]
+    public function delete_product(Request $request, int $id): JsonResponse
+    {
+        $product = $this->em->getRepository(Producto::class)->find($id);
+        
+        if(empty($product)){
+            return $this->json([
+                "estado"=>"error",
+                "mensaje"=>"No se ha encontrado el producto"
+            ]);
+        }
+
+        $this->em->remove($product);
+        $this->em->flush();
+        return $this->json([
+            "estado"=>"ok",
+            "mensaje"=>"Se ha borrado con éxito el producto"
+        ]);
+    }
 }

@@ -27,3 +27,8 @@ api_post_create_section:
   path:  /api/doctrine/admin/create/section
   controller: App\Controller\AdminController::create_section
   methods: POST
+
+api_delete_product:
+  path:  /api/doctrine/admin/delete/product/{id}
+  controller: App\Controller\AdminController::delete_product
+  methods: DELETE

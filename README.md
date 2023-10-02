@@ -36,3 +36,6 @@ body => json
 {
     "nombre":"nombre",
 }
+
+* Delete a product -> METHOD:DELETE*
+https://127.0.0.1:8000/api/doctrine/admin/delete/product/{id_product}
