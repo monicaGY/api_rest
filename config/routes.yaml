@@ -1,9 +1,3 @@
-api_get_show:
-    path:       /api/doctrine/admin
-    controller: App\Controller\AdminController::create_product
-    methods:    GET
-
-
 api_get_products:
   path:  /api/doctrine/client/products
   controller: App\Controller\ClientController::list_products
