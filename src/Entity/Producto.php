@@ -19,8 +19,7 @@ class Producto
     #[ORM\Column]
     private ?float $precio = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $foto = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'productos')]
     #[ORM\JoinColumn(nullable: false)]
@@ -55,17 +54,7 @@ class Producto
         return $this;
     }
 
-    public function getFoto(): ?string
-    {
-        return $this->foto;
-    }
-
-    public function setFoto(string $foto): static
-    {
-        $this->foto = $foto;
-
-        return $this;
-    }
+ 
 
     public function getSeccion(): ?Seccion
     {

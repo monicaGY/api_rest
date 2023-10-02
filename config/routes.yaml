@@ -2,3 +2,29 @@ api_get_show:
     path:       /api/doctrine/admin
     controller: App\Controller\AdminController::create_product
     methods:    GET
+
+
+api_get_products:
+  path:  /api/doctrine/client/products
+  controller: App\Controller\ClientController::list_products
+  methods: GET
+
+api_get_sections:
+  path:  /api/doctrine/client/sections
+  controller: App\Controller\ClientController::list_sections
+  methods: GET
+
+api_get_products_by_section:
+  path:  /api/doctrine/client/products/section/{id}
+  controller: App\Controller\ClientController::products_by_section
+  methods: GET
+
+api_post_create_product:
+  path:  /api/doctrine/admin/create/product
+  controller: App\Controller\AdminController::create_product
+  methods: POST
+
+api_post_create_section:
+  path:  /api/doctrine/admin/create/section
+  controller: App\Controller\AdminController::create_section
+  methods: POST
