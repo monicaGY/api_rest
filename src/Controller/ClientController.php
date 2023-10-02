@@ -8,6 +8,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Producto;
 use App\Entity\Seccion;
+use Symfony\Component\HttpFoundation\Request;
+
 
 class ClientController extends AbstractController
 {
@@ -103,6 +105,55 @@ class ClientController extends AbstractController
         return $this->json([
             'seccion'=>$products[0]->getSeccion()->getNombre(),
             'productos' => $products_array
+        ]);
+    }
+
+    #[Route('/api/doctrine/client/products/update/{id}')]
+    public function product_update(int $id, Request $request): JsonResponse{
+
+        $product = $this->em->getRepository(Producto::class)->findById($id);
+        $data_product = json_decode($request->getContent(),true);
+        
+        if(empty($product)){
+            return $this->json([
+                'estado'=>'error',
+                'mensaje'=>'No se ha encontrado el producto'
+            ]);
+        }
+
+        if( empty($data_product['seccion_id']) ||
+            empty($data_product['nombre']) ||
+            empty($data_product['precio'])
+        ){
+            return $this->json([
+                'estado'=>'error',
+                'mensaje'=>'Faltan parámetros'
+            ]);
+        }
+
+        $section = $this->em->getRepository(Seccion::class)->find($data_product['seccion_id']);
+        if(empty($section)){
+            return $this->json([
+                'estado'=>'error',
+                'mensaje'=>'La categoría no existe'
+            ]);
+        }
+
+        if(!is_numeric($data_product['precio'])){
+            return $this->json([
+                'estado'=>'error',
+                'mensaje'=>'El precio debe ser numérico'
+            ]);
+        }
+
+        $producto = new Producto();
+        $producto->setNombre($data_product['nombre']);
+        $producto->setSeccion($section);
+        $producto->setPrecio($data_product['precio']);
+        $this->em->flush();
+        return $this->json([
+            'estado'=>'ok',
+            'mensaje'=>'Producto modificado con éxito'
         ]);
     }
 }

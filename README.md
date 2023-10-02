@@ -9,6 +9,15 @@ https://127.0.0.1:8000/api/doctrine/client/sections
 * List products by section -> METHOD:GET *
 https://127.0.0.1:8000/api/doctrine/client/products/section/{id_section}
 
+* Update a product -> METHOD:PUT *
+https://127.0.0.1:8000/api/doctrine/client/products/update/{id_product}
+body => json
+{
+    "nombre":"nombre",
+    "seccion_id": 1,
+    "precio":1
+}
+
 
 <em> ROLE_ADMIN </em>
 

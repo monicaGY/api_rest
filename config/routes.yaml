@@ -13,6 +13,11 @@ api_get_products_by_section:
   controller: App\Controller\ClientController::products_by_section
   methods: GET
 
+api_put_update_product:
+  path:  /api/doctrine/client/products/update/{id}
+  controller: App\Controller\ClientController::product_update
+  methods: PUT
+
 api_post_create_product:
   path:  /api/doctrine/admin/create/product
   controller: App\Controller\AdminController::create_product
