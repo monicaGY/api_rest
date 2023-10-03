@@ -56,6 +56,7 @@ class AccessController extends AbstractController
         $jwt = JWT::encode($payload, $_ENV['JWT_SECRET'], 'HS256');
         return $this->json([
             'estado' => 'ok',
+            'role'=> $user->getRoles(),
             'token' => $jwt,
         ]);
     }

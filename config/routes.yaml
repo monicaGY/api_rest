@@ -32,3 +32,7 @@ api_delete_product:
   path:  /api/doctrine/admin/delete/product/{id}
   controller: App\Controller\AdminController::delete_product
   methods: DELETE
+api_get_login:
+  path: /api/login
+  controller: App\Controller\AccessController::login
+  methods: GET
