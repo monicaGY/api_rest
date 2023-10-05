@@ -19,7 +19,7 @@ class AccessController extends AbstractController
     public function __construct(EntityManagerInterface $em){
         $this->em = $em;
     }
-    #[Route('/api/login')]
+    #[Route('/api/v1/login')]
     public function login(Request $request): JsonResponse
     {
 
@@ -31,7 +31,7 @@ class AccessController extends AbstractController
             return $this->json([
                 'estado' => 'error',
                 'mensaje' => 'Faltan parámetros',
-            ]);
+            ], 400);
         }
        
         $user = $this->em->getRepository(User::class)->findOneBy(['username'=>$data['usuario']]);
@@ -40,7 +40,7 @@ class AccessController extends AbstractController
             return $this->json([
                 'estado' => 'error',
                 'mensaje' => 'Acceso fallido',
-            ]);
+            ], 401);
         }
 
         $payload = [
@@ -58,6 +58,6 @@ class AccessController extends AbstractController
             'estado' => 'ok',
             'role'=> $user->getRoles(),
             'token' => $jwt,
-        ]);
+        ], 200);
     }
 }

@@ -8,6 +8,12 @@ Por otro lado he capturado la excepciones de Symfony para devolverlos en formado
 En la autenticación, cuando la acción se realiza con éxito le devolverá un token para poder acceder a las urls que le permite según su rol,
 se deberá de colocar en el body como " X-AUTH-TOKEN " y caducará al haber pasado 30 minutos.
 Mientras en la autorización se encarga de limitar el acceso a las URLS según el rol que presente.
+<em>LOGEAR EL USER</em>
+https://127.0.0.1:8000/api/doctrine/v1/login
+BODY => json{
+    "usuario":"",
+    "contraseña":""
+}
 <em> ROLE_USER </em>
 
 * List products -> METHOD:GET *

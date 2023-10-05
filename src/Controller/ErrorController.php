@@ -9,12 +9,10 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ErrorController extends AbstractController
 {
-    public function showJsonError(HttpExceptionInterface $exception): JsonResponse
+    public function showJsonError($exception): JsonResponse
     {
-        // return new JsonResponse($response, $statusCode);
         return $this->json([
             'estado' => 'error',
-            'código' => $exception->getStatusCode(),
             'mensaje' => $exception->getMessage()
         ], $exception->getStatusCode());
     }

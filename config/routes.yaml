@@ -1,38 +1,38 @@
 api_get_products:
-  path:  /api/doctrine/client/products
+  path:  /api/doctrine/v1/client/products
   controller: App\Controller\ClientController::list_products
   methods: GET
 
 api_get_sections:
-  path:  /api/doctrine/client/sections
+  path:  /api/doctrine/v1/client/sections
   controller: App\Controller\ClientController::list_sections
   methods: GET
 
 api_get_products_by_section:
-  path:  /api/doctrine/client/products/section/{id}
+  path:  /api/doctrine/v1/client/products/section/{id}
   controller: App\Controller\ClientController::products_by_section
   methods: GET
 
 api_put_update_product:
-  path:  /api/doctrine/client/products/update/{id}
+  path:  /api/doctrine/v1/client/product/{id}
   controller: App\Controller\ClientController::product_update
   methods: PUT
 
 api_post_create_product:
-  path:  /api/doctrine/admin/create/product
+  path:  /api/doctrine/v1/admin/product
   controller: App\Controller\AdminController::create_product
   methods: POST
 
 api_post_create_section:
-  path:  /api/doctrine/admin/create/section
+  path:  /api/doctrine/v1/admin/section
   controller: App\Controller\AdminController::create_section
   methods: POST
 
 api_delete_product:
-  path:  /api/doctrine/admin/delete/product/{id}
+  path:  /api/doctrine/v1/admin/product/{id}
   controller: App\Controller\AdminController::delete_product
   methods: DELETE
 api_get_login:
-  path: /api/login
+  path: /api/v1/login
   controller: App\Controller\AccessController::login
   methods: GET

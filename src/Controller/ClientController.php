@@ -17,7 +17,7 @@ class ClientController extends AbstractController
     public function __construct(EntityManagerInterface $em){
         $this->em = $em;
     }
-    #[Route('/api/doctrine/client/products')]
+    #[Route('/api/doctrine/v1/client/products')]
     public function list_products(): JsonResponse
     {
         $products = $this->em->getRepository(Producto::class)->findAll();
@@ -36,15 +36,15 @@ class ClientController extends AbstractController
     
         if(empty($array_products)){
             return $this->json([
-                'estado'=>'error',
+                'estado'=>'ok',
                 'mensaje'=>'no se han creado productos'
-            ]);
+            ], 200);
         }
-        return $this->json($array_products);
+        return $this->json($array_products, 200);
     }
 
 
-    #[Route('/api/doctrine/client/sections')]
+    #[Route('/api/doctrine/v1/client/sections')]
     public function list_sections(): JsonResponse
     {
         $sections = $this->em->getRepository(Seccion::class)->findAll();
@@ -63,13 +63,13 @@ class ClientController extends AbstractController
             return $this->json([
                 'estado'=>'error',
                 'mensaje'=>'no se han creado secciones'
-            ]);
+            ], 200);
         }
-        return $this->json($sections_array);
+        return $this->json($sections_array, 200);
     }
 
 
-    #[Route('/api/doctrine/client/products/section/{id}')]
+    #[Route('/api/doctrine/v1/client/products/section/{id}')]
     public function products_by_section(int $id): JsonResponse
     {
         $section = $this->em->getRepository(Seccion::Class)->find($id);
@@ -78,16 +78,16 @@ class ClientController extends AbstractController
             return $this->json([
                 'estado'=>'error',
                 'mensaje'=>'no existen la sección'
-            ]);
+            ], 404);
         }
         $products = $this->em->getRepository(Producto::class)->findBy(array('seccion'=> $id),array('id'=>'ASC'));
         
         
         if(empty($products)){
             return $this->json([
-                'estado'=>'error',
+                'estado'=>'ok',
                 'mensaje'=>'no existen productos en esta sección'
-            ]);
+            ], 200);
         }
 
         $products_array = [];
@@ -105,20 +105,20 @@ class ClientController extends AbstractController
         return $this->json([
             'seccion'=>$products[0]->getSeccion()->getNombre(),
             'productos' => $products_array
-        ]);
+        ], 200);
     }
 
-    #[Route('/api/doctrine/client/products/update/{id}')]
+    #[Route('/api/doctrine/v1/client/product/{id}')]
     public function product_update(int $id, Request $request): JsonResponse{
 
-        $product = $this->em->getRepository(Producto::class)->findById($id);
+        $producto = $this->em->getRepository(Producto::class)->find($id);
         $data_product = json_decode($request->getContent(),true);
         
-        if(empty($product)){
+        if(empty($producto)){
             return $this->json([
                 'estado'=>'error',
                 'mensaje'=>'No se ha encontrado el producto'
-            ]);
+            ], 404);
         }
 
         if( empty($data_product['seccion_id']) ||
@@ -128,7 +128,7 @@ class ClientController extends AbstractController
             return $this->json([
                 'estado'=>'error',
                 'mensaje'=>'Faltan parámetros'
-            ]);
+            ], 400);
         }
 
         $section = $this->em->getRepository(Seccion::class)->find($data_product['seccion_id']);
@@ -136,24 +136,24 @@ class ClientController extends AbstractController
             return $this->json([
                 'estado'=>'error',
                 'mensaje'=>'La categoría no existe'
-            ]);
+            ], 404);
         }
 
         if(!is_numeric($data_product['precio'])){
             return $this->json([
                 'estado'=>'error',
                 'mensaje'=>'El precio debe ser numérico'
-            ]);
+            ], 400);
         }
 
-        $producto = new Producto();
         $producto->setNombre($data_product['nombre']);
         $producto->setSeccion($section);
         $producto->setPrecio($data_product['precio']);
         $this->em->flush();
+       
         return $this->json([
             'estado'=>'ok',
             'mensaje'=>'Producto modificado con éxito'
-        ]);
+        ], 201);
     }
 }
